@@ -52,17 +52,18 @@
       mag_avg = mag_avg/real(cnt)
       ensq_avg = ensq_avg/real(cnt)
       magsq_avg = magsq_avg/real(cnt)
-      chi = magsq_avg - mag_avg*mag_avg
-      cv = ensq_avg - en_avg*en_avg
+      chi = (magsq_avg - mag_avg*mag_avg)/temp
+      cv = (ensq_avg - en_avg*en_avg)/temp**2.0
       write(27,*) temp, en_avg
       write(28,*) temp, mag_avg
       write(49,*) temp, chi
       write(50,*) temp, cv
-      if (temp.lt.2.2.or.temp.gt.2.6)then
-        temp = temp + 0.1
-      else
+      if (int(temp*10.0).ge.22.and.int(temp*10.0).lt.26)then
         temp = temp + 0.01
+      else
+        temp = temp + 0.1
       endif
+      print*, temp
     ENDDO
     END
 !------------------------------------------------------------
